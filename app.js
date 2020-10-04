@@ -2,12 +2,14 @@ require('dotenv').config()
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var apiRouter = require('./routes/api')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const config = require('./config')
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -62,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
+app.use('/api', apiRouter)
 app.use('/api/auth', authRouter);
 app.use('/api/user',passport.authenticate('jwt', {session: false}), secureRoutes)
 // catch 404 and forward to error handler
