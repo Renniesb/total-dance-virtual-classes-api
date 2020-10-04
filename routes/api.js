@@ -13,3 +13,5 @@ router.get('/videos/:danceType/:danceLevel', (req,res,next) => {
     })
     .catch(next)
 })
+
+module.exports = router;
