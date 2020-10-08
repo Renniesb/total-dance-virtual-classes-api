@@ -7,6 +7,7 @@ function makeUsersArray() {
       full_name: 'Test user 1',
       nickname: 'TU1',
       email:'email1',
+      iat: 1602122749,
       password: 'password',
     },
     {
@@ -15,6 +16,7 @@ function makeUsersArray() {
       full_name: 'Test user 2',
       nickname: 'TU2',
       email:'email2',
+      iat: "1602122749",
       password: 'password',
     }
   ]

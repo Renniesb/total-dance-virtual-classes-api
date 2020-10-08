@@ -119,7 +119,8 @@ describe('Auth Endpoints', function() {
         user_id: testUser.id,
         full_name: testUser.full_name, 
         nickname: testUser.nickname,
-        email: testUser.email  
+        email: testUser.email,
+        iat: 1602122749  
       }
       return supertest(app)
         .post('/api/user/profile')
