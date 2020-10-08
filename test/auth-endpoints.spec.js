@@ -70,10 +70,14 @@ describe('Auth Endpoints', function() {
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
       const userValidCreds = {
         user_name: testUser.user_name,
-        password: testUser.password,
+        password: testUser.password
+
       }
       const expectedToken = jwt.sign(
-        { user_id: testUser.id },
+        { user_id: testUser.id,
+          full_name: testUser.full_name, 
+          nickname: testUser.nickname,
+          email: testUser.email   },
         process.env.JWT_SECRET,
         {
           subject: testUser.user_name,
@@ -85,6 +89,44 @@ describe('Auth Endpoints', function() {
         .send(userValidCreds)
         .expect(200, {
           authToken: expectedToken,
+        })
+    })
+  })
+  describe(`POST /api/user/profile`, () => {
+    beforeEach('insert users', () =>
+      users.seedUsers(
+        db,
+        testUsers,
+      )
+    )
+
+    it(`responds 200 with a user message and a user object`, () => {
+  
+      const expectedToken = jwt.sign(
+        { user_id: testUser.id,
+          full_name: testUser.full_name, 
+          nickname: testUser.nickname,
+          email: testUser.email   },
+        process.env.JWT_SECRET,
+        {
+          subject: testUser.user_name,
+          algorithm: 'HS256',
+        }
+      )
+
+      const expectedUserObject = {
+        sub: testUser.user_name,
+        user_id: testUser.id,
+        full_name: testUser.full_name, 
+        nickname: testUser.nickname,
+        email: testUser.email  
+      }
+      return supertest(app)
+        .post('/api/user/profile')
+        .set('Authorization', 'Bearer '+ expectedToken)
+        .expect(200, {
+          message : 'You made it to the secure route',
+          user : expectedUserObject
         })
     })
   })
