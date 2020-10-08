@@ -120,14 +120,18 @@ describe('Auth Endpoints', function() {
         full_name: testUser.full_name, 
         nickname: testUser.nickname,
         email: testUser.email,
-        iat: 1602122749  
       }
       return supertest(app)
         .post('/api/user/profile')
         .set('Authorization', 'Bearer '+ expectedToken)
-        .expect(200, {
-          message : 'You made it to the secure route',
-          user : expectedUserObject
+        .expect(200)
+        .expect(res => {
+          expect(res.body.message).to.eql('You made it to the secure route')
+          expect(res.body.user.sub).to.eql(expectedUserObject.sub)
+          expect(res.body.user.user_id).to.eql(expectedUserObject.user_id)
+          expect(res.body.user.full_name).to.eql(expectedUserObject.full_name)
+          expect(res.body.user.nickname).to.eql(expectedUserObject.nickname)
+          expect(res.body.user.email).to.eql(expectedUserObject.email)
         })
     })
   })
