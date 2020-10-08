@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 
-//change blogful users to a different 
+//authorization functions
 const AuthService = {
     getUserWithUserName(db, user_name) {
         return db('dance_users')
