@@ -22,7 +22,7 @@ const AuthService = {
         return jwt.verify(token, config.JWT_SECRET,{
             algorithms: ['HS256'],
         })
-    },
+    }, //parse the profile information to readable string
     parseBasicToken(token){
         return Buffer
             .from(token, 'base64')

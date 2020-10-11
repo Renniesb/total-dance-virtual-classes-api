@@ -1,8 +1,7 @@
 var express = require('express')
 var router = express.Router()
-// const { route } = require('.')
-// const jsonBodyParser = express.json()
 
+//get the correct dance videos based on the dance type and dance level that the user provides
 router.get('/videos/:danceType/:danceLevel', (req,res,next) => {
     req.app.get('db')
     .from('videos')

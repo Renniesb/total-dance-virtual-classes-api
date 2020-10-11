@@ -28,7 +28,7 @@ describe('test getting dance videos', function() {
             .into('videos')
             .insert(testVideos)
       })
-  
+      //tests with specific user values to get the curated list
       it('responds with 200 and all of the questions', () => {
         const dancetype = 'Salsa'
         const level = 'intermediate'

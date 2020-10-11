@@ -23,6 +23,7 @@ describe('Auth Endpoints', function() {
 
   afterEach('cleanup', () => db.raw('TRUNCATE TABLE dance_users'))
 
+  //test the login functionality
   describe(`POST /api/auth/login`, () => {
     beforeEach('insert users', () =>
       users.seedUsers(
@@ -38,7 +39,7 @@ describe('Auth Endpoints', function() {
         user_name: testUser.user_name,
         password: testUser.password,
       }
-
+      //test when username or password is missing
       it(`responds with 400 required error when '${field}' is missing`, () => {
         delete loginAttemptBody[field]
 
@@ -50,7 +51,7 @@ describe('Auth Endpoints', function() {
           })
       })
     })
-
+    //test with an incorrect username
     it(`responds 400 'invalid user_name or password' when bad user_name`, () => {
       const userInvalidUser = { user_name: 'user-not', password: 'existy' }
       return supertest(app)
@@ -59,6 +60,7 @@ describe('Auth Endpoints', function() {
         .expect(400, { error: `Incorrect user_name or password` })
     })
 
+    //test with an incorrect password
     it(`responds 400 'invalid user_name or password' when bad password`, () => {
       const userInvalidPass = { user_name: testUser.user_name, password: 'incorrect' }
       return supertest(app)
@@ -66,7 +68,7 @@ describe('Auth Endpoints', function() {
         .send(userInvalidPass)
         .expect(400, { error: `Incorrect user_name or password` })
     })
-
+    //tests when the credentials are valid
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
       const userValidCreds = {
         user_name: testUser.user_name,
@@ -99,7 +101,7 @@ describe('Auth Endpoints', function() {
         testUsers,
       )
     )
-
+    //test when a succesful call is made to profile route
     it(`responds 200 with a user message and a user object`, () => {
   
       const expectedToken = jwt.sign(
@@ -121,6 +123,7 @@ describe('Auth Endpoints', function() {
         nickname: testUser.nickname,
         email: testUser.email,
       }
+      //tests the values returned by the profile route
       return supertest(app)
         .post('/api/user/profile')
         .set('Authorization', 'Bearer '+ expectedToken)

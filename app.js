@@ -10,18 +10,17 @@ const {CLIENT_ORIGIN} = require('./config');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const config = require('./config')
-
-
 var indexRouter = require('./routes/index');
 const authRouter = require('./auth/auth-router')
 const secureRoutes = require('./routes/secure-routes')
 const passport = require('passport');
 
 var app = express();
-
+//Devine a JWT Strategy for authentication
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
+//define how we will extract the JWT
 passport.use(new JWTstrategy({
   secretOrKey: config.JWT_SECRET,
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()

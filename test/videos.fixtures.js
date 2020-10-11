@@ -1,4 +1,5 @@
 function makeVideosArray() {
+  //create an array of video test values
     return [
       {id: 1 , dancetype:'Salsa',dancelevel:'beginner',movetitle: 'How To Spin Your Partner',link: '46dybRGrCsc'},
       {id: 2 , dancetype:'Salsa',dancelevel:'beginner',movetitle: 'Make your basic step look more natural',link: '9CzGaubcqQg'},
