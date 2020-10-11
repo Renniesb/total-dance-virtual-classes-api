@@ -6,6 +6,7 @@ var apiRouter = require('./routes/api')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const {CLIENT_ORIGIN} = require('./config');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const config = require('./config')
@@ -42,7 +43,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger((NODE_ENV === 'production') ? 'tiny' : 'common'))
-app.use(cors())
+app.use(cors({
+  origin: CLIENT_ORIGIN
+}))
 app.use(helmet())
 
 app.use(express.json());
@@ -53,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/api', apiRouter)
+app.use('/api', apiRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user',passport.authenticate('jwt', {session: false}), secureRoutes)
 // catch 404 and forward to error handler
