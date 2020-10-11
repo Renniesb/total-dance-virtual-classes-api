@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+//create the database seed users to test with
 function makeUsersArray() {
   return [
     {
@@ -19,6 +20,7 @@ function makeUsersArray() {
     }
   ]
 }
+//seed the users with the appropriate encrypted password
 function seedUsers(db, users) {
   const preppedUsers = users.map(user => ({
     ...user,

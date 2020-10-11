@@ -12,7 +12,6 @@ const config = require('./config')
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 const authRouter = require('./auth/auth-router')
 const secureRoutes = require('./routes/secure-routes')
 const passport = require('passport');
@@ -26,17 +25,7 @@ passport.use(new JWTstrategy({
   secretOrKey: config.JWT_SECRET,
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
 }, 
-// function(err, user) {
-//   if (err) {
-//       return done(err, false);
-//   }
-//   if (user) {
-//       return done(null, user);
-//   } else {
-//       return done(null, false);
-//       // or you could create a new account
-//   }
-// }
+
 async (authToken, done)=>{
   try {
     return done(null, authToken);

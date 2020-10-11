@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "deploy": "git push heroku master",
     "start": "node server.js",
     "test": "mocha --require test/setup.js",
     "dev": "nodemon server.js"
