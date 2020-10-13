@@ -41,7 +41,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger((NODE_ENV === 'production') ? 'tiny' : 'common'));
-app.use(cors());
+app.use(cors({
+  origin: CLIENT_ORIGIN
+}));
 app.use(helmet());
 
 app.use(express.json());
