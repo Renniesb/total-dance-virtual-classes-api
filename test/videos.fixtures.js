@@ -11,6 +11,6 @@ function makeVideosArray() {
       {id: 8 , dancetype:'Salsa',dancelevel:'advanced', movetitle: 'Breakaway turn (inspired by Lindy hop)' ,link: 'ziH6X4QHITY'},
       {id: 9 , dancetype:'Salsa',dancelevel:'advanced', movetitle: 'Back spot turn into titanic' ,link: 'yPkNaOGyAyc'}
     ]
-}
+};
 
-module.exports =  makeVideosArray
+module.exports =  makeVideosArray;

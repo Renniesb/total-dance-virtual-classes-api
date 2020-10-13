@@ -1,27 +1,27 @@
-const knex = require('knex')
-const jwt = require('jsonwebtoken')
-const app = require('../app')
-const users = require('./users.fixtures.js')
+const knex = require('knex');
+const jwt = require('jsonwebtoken');
+const app = require('../app');
+const users = require('./users.fixtures.js');
 
 describe('Auth Endpoints', function() {
   let db
 
-  const testUsers = users.makeUsersArray()
-  const testUser = testUsers[0]
+  const testUsers = users.makeUsersArray();
+  const testUser = testUsers[0];
 
   before('make knex instance', () => {
     db = knex({
       client: 'pg',
       connection: process.env.TEST_DATABASE_URL,
-    })
-    app.set('db', db)
-  })
+    });
+    app.set('db', db);
+  });
 
-  after('disconnect from db', () => db.destroy())
+  after('disconnect from db', () => db.destroy());
 
-  before('cleanup', () => db.raw('TRUNCATE TABLE dance_users'))
+  before('cleanup', () => db.raw('TRUNCATE TABLE dance_users'));
 
-  afterEach('cleanup', () => db.raw('TRUNCATE TABLE dance_users'))
+  afterEach('cleanup', () => db.raw('TRUNCATE TABLE dance_users'));
 
   //test the login functionality
   describe(`POST /api/auth/login`, () => {
@@ -30,9 +30,9 @@ describe('Auth Endpoints', function() {
         db,
         testUsers,
       )
-    )
+    );
 
-    const requiredFields = ['user_name', 'password']
+    const requiredFields = ['user_name', 'password'];
 
     requiredFields.forEach(field => {
       const loginAttemptBody = {
@@ -41,15 +41,15 @@ describe('Auth Endpoints', function() {
       }
       //test when username or password is missing
       it(`responds with 400 required error when '${field}' is missing`, () => {
-        delete loginAttemptBody[field]
+        delete loginAttemptBody[field];
 
         return supertest(app)
           .post('/api/auth/login')
           .send(loginAttemptBody)
           .expect(400, {
             error: `Missing '${field}' in request body`,
-          })
-      })
+          });
+      });
     })
     //test with an incorrect username
     it(`responds 400 'invalid user_name or password' when bad user_name`, () => {
@@ -57,16 +57,16 @@ describe('Auth Endpoints', function() {
       return supertest(app)
         .post('/api/auth/login')
         .send(userInvalidUser)
-        .expect(400, { error: `Incorrect user_name or password` })
-    })
+        .expect(400, { error: `Incorrect user_name or password` });
+    });
 
     //test with an incorrect password
     it(`responds 400 'invalid user_name or password' when bad password`, () => {
-      const userInvalidPass = { user_name: testUser.user_name, password: 'incorrect' }
+      const userInvalidPass = { user_name: testUser.user_name, password: 'incorrect' };
       return supertest(app)
         .post('/api/auth/login')
         .send(userInvalidPass)
-        .expect(400, { error: `Incorrect user_name or password` })
+        .expect(400, { error: `Incorrect user_name or password` });
     })
     //tests when the credentials are valid
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
@@ -92,15 +92,15 @@ describe('Auth Endpoints', function() {
         .expect(200, {
           authToken: expectedToken,
         })
-    })
-  })
+    });
+  });
   describe(`POST /api/user/profile`, () => {
     beforeEach('insert users', () =>
       users.seedUsers(
         db,
         testUsers,
       )
-    )
+    );
     //test when a succesful call is made to profile route
     it(`responds 200 with a user message and a user object`, () => {
   
@@ -135,7 +135,7 @@ describe('Auth Endpoints', function() {
           expect(res.body.user.full_name).to.eql(expectedUserObject.full_name)
           expect(res.body.user.nickname).to.eql(expectedUserObject.nickname)
           expect(res.body.user.email).to.eql(expectedUserObject.email)
-        })
-    })
-  })
-})
+        });
+    });
+  });
+});

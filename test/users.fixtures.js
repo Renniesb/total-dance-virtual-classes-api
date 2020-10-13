@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 //create the database seed users to test with
 function makeUsersArray() {
   return [
@@ -25,7 +25,7 @@ function seedUsers(db, users) {
   const preppedUsers = users.map(user => ({
     ...user,
     password: bcrypt.hashSync(user.password, 1)
-  }))
+  }));
   return db.into('dance_users').insert(preppedUsers)
     .then(() =>
       // update the auto sequence to stay in sync
@@ -33,7 +33,7 @@ function seedUsers(db, users) {
         `SELECT setval('dance_users_id_seq', ?)`,
         [users[users.length - 1].id],
       )
-    )
-}
+    );
+};
 
-module.exports =  {makeUsersArray, seedUsers}
+module.exports =  {makeUsersArray, seedUsers};

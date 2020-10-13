@@ -1,5 +1,5 @@
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var router = express.Router();
 
 //get the correct dance videos based on the dance type and dance level that the user provides
 router.get('/videos/:danceType/:danceLevel', (req,res,next) => {
@@ -10,7 +10,7 @@ router.get('/videos/:danceType/:danceLevel', (req,res,next) => {
     .then(videos => {
         res.json(videos)
     })
-    .catch(next)
-})
+    .catch(next);
+});
 
 module.exports = router;

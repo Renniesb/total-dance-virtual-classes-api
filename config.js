@@ -5,4 +5,4 @@ module.exports = {
     JWT_SECRET: process.env.JWT_SECRET || 'change-this-secret',
     TEST_DATABASE_URL: process.env.TEST_DATABASE_URL  || 'postgresql://postgres@localhost/total_dance',
     CLIENT_ORIGIN: 'https://total-dance-virtual-classes.vercel.app'
-}
+};
